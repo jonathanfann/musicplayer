@@ -1,0 +1,17 @@
+.playerplayer {
+    position: relative;
+    z-index: 3;
+    background: #fff;
+    height: 50px;
+}
+
+.playOrPause {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    padding: 8px;
+    width: 24px;
+    text-align: center;
+    border: 2px solid #000;
+    float: left;
+}
