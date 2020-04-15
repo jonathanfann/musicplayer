@@ -1,2 +1,3 @@
 # musicplayer
-React app to make music player similar to picosong's old one
+React music player
+![https://github.com/jonathanfann/musicplayer/blob/master/src/media/screenshot.png?raw=true](https://github.com/jonathanfann/musicplayer/blob/master/src/media/screenshot.png?raw=true)
