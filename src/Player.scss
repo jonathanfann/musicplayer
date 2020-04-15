@@ -18,11 +18,11 @@
 
 .progress-bar {
     height: 50px;
-    width: calc(100% - 44px);
+    width: calc(100% - 43px);
     margin-left: 44px;
     .inner-progress-bar {
         height: 100%;
-        background: linear-gradient(90deg, #ff00ff, #00ff00);
+        background: #ff00ff;
         transition: width ease-in 0.2s;
     }
 }
