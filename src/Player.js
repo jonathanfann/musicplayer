@@ -19,6 +19,7 @@ class Player extends React.Component {
         this.state = {
             params: params,
             url: params.url,
+            name: params.name,
             img: null,
             paused: true,
             position: 0
@@ -59,12 +60,16 @@ class Player extends React.Component {
 
     render() {
         return (
-            <div className="playerplayer">
-                <div className="playOrPause" onClick={this.handleClick}>
-                    <FontAwesomeIcon icon={this.state.paused ? faPlay : faPause}/>
-                </div>
-                <div id="progressBar" className="progress-bar">
-                    <div className="inner-progress-bar" style={{width: this.state.position}}>
+            <div>
+                <h1>{!this.state.url ? 'LBFB - Ledge' : this.state.name }</h1>
+                <div className="Player-wrapper">
+                    <div className="playerplayer">
+                        <div className="playOrPause" onClick={this.handleClick}>
+                            <FontAwesomeIcon icon={this.state.paused ? faPlay : faPause}/>
+                        </div>
+                        <div id="progressBar" className="progress-bar">
+                            <div className="inner-progress-bar" style={{width: this.state.position}}></div>
+                        </div>
                     </div>
                 </div>
             </div>
