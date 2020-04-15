@@ -1,29 +1,28 @@
 import React from 'react';
 import queryString from 'query-string';
 import './Player.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import song from './media/lbfb-ledge.mp3';
+import {
+    FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+import {
+    faPlay,
+    faPause
+} from '@fortawesome/free-solid-svg-icons';
 
 class Player extends React.Component {
     constructor(props) {
         super(props);
-        const params = queryString.parse(window.location.search, { ignoreQueryPrefix: true });
+        const params = queryString.parse(window.location.search, {
+            ignoreQueryPrefix: true
+        });
         this.state = {
             params: params,
             url: null,
             img: null,
-            paused: true
-        }
-        // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
-    }
-    handleClick() {
-        // play/pause
-        this.setState({
-            paused: !this.state.paused
-        });
-    }
-    render() {
+            paused: true,
+            position: 0
+        };
         if (this.state.params.length) {
             // if don't exist will be null, which is fine
             this.setState({
@@ -31,12 +30,51 @@ class Player extends React.Component {
                 img: this.state.params.img
             });
         }
+        this.audio = new Audio(this.state.url || song);
+        // This binding is necessary to make `this` work in the callback
+        this.handleClick = this.handleClick.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    }
+
+    componentDidMount() {
+        this.audio.addEventListener('ended', () => this.setState({
+            paused: true
+        }));
+        this.audio.addEventListener('timeupdate', () => {
+            let current = this.audio.currentTime / this.audio.duration;
+            let position = current * document.getElementById('progressBar').offsetWidth;
+            this.setState({
+                position: position
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this.audio.removeEventListener('ended', () => this.setState({
+            paused: true
+        }));
+    }
+
+    handleClick() {
+        // play/pause
+        this.setState({paused: !this.state.paused}, () => {
+                this.state.paused ? this.audio.pause() : this.audio.play();
+            }
+        );
+    }
+
+    render() {
         return (
-          <div className="playerplayer">
-            <div className="playOrPause" onClick={this.handleClick}>
-                <FontAwesomeIcon icon={this.state.paused ? faPlay : faPause} />
+            <div className="playerplayer">
+                <div className="playOrPause" onClick={this.handleClick}>
+                    <FontAwesomeIcon icon={this.state.paused ? faPlay : faPause}/>
+                </div>
+                <div id="progressBar" className="progress-bar">
+                    <div className="inner-progress-bar" style={{width: this.state.position}}>
+                    </div>
+                </div>
             </div>
-          </div>
         );
     }
 }
