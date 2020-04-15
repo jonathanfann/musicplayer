@@ -18,18 +18,11 @@ class Player extends React.Component {
         });
         this.state = {
             params: params,
-            url: null,
+            url: params.url,
             img: null,
             paused: true,
             position: 0
         };
-        if (this.state.params.length) {
-            // if don't exist will be null, which is fine
-            this.setState({
-                url: this.state.params.url,
-                img: this.state.params.img
-            });
-        }
         this.audio = new Audio(this.state.url || song);
         // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
